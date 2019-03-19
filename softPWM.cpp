@@ -1,19 +1,20 @@
 #include <stdio.h>
 #include <wiringPi.h>
 #include <softPwm.h>
+#include <cstdlib>
+#include <iostream>
+#include <thread>
 
 #define PINA 28
 #define PINB 29
 
-int main(void)
+using namespace std;
+
+bool stop = false;
+
+void loop()
 {
-	wiringPiSetup();		
-	pinMode(PINA, OUTPUT);		
-	pinMode(PINB, OUTPUT);		
-	softPwmCreate(PINA, 0, 100);	
-	softPwmCreate(PINB, 0, 100);
-	
-	while(true)
+	while(!stop)
 	{	
 		for(int i=0; i<5; i++)
 		{		
@@ -23,3 +24,20 @@ int main(void)
 		}
 	}
 }
+
+int main(void)
+{	
+	thread first(loop);
+	wiringPiSetup();		
+	pinMode(PINA, OUTPUT);		
+	pinMode(PINB, OUTPUT);		
+	softPwmCreate(PINA, 0, 100);	
+	softPwmCreate(PINB, 0, 100);
+	
+	first.joinable();
+	cin.get();
+	pinMode(PINA, INPUT);		
+	pinMode(PINB, INPUT);
+}	
+
+
