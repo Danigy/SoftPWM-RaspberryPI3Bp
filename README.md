@@ -16,6 +16,7 @@ For compiling only needed:
 -lwiringPi
 ```
 Running program that uses hardware PWM method you might need to run from terminal:
+
 ```bash
 sudo ./PROGRAMNAME
 ```
