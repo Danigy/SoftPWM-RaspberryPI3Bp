@@ -2,13 +2,24 @@
 #include <wiringPi.h>
 #include <softPwm.h>
 
-#define PIN 29
+#define PINA 28
+#define PINB 29
+
 int main(void)
 {
 	wiringPiSetup();		
-	pinMode(PIN, OUTPUT);		
-	softPwmCreate(PIN, 0, 100);		
-	softPwmWrite(PIN, 100);
+	pinMode(PINA, OUTPUT);		
+	pinMode(PINB, OUTPUT);		
+	softPwmCreate(PINA, 0, 100);	
+	softPwmCreate(PINB, 0, 100);
+	
 	while(true)
-	delay(1000);
+	{	
+		for(int i=0; i<5; i++)
+		{		
+			softPwmWrite(PINA, 100 - i*25);
+			softPwmWrite(PINB, 0 + i*25);
+			delay(2000);
+		}
+	}
 }
