@@ -5,11 +5,12 @@
 #define PINOUT 1
 #define PININ 2
 #define RANGE 1024
+#define CLOCK 2
 
 int i = 0;
 int u = 0;
 int z = 1;
-float debilizmas = 0;
+float sign = 0;
 float duty =0;
 	
 int main(void)
@@ -17,6 +18,7 @@ int main(void)
 	wiringPiSetup();
 	pinMode(PINOUT,PWM_OUTPUT);	
 	pinMode(PININ,INPUT);
+	pwmSetClock(CLOCK);
 	pwmSetRange(RANGE);
 	pwmWrite(PINOUT,200);
 	
@@ -29,8 +31,8 @@ int main(void)
 			if(digitalRead(PININ) == 1)
 				i++;	
 		}
-		debilizmas +=i;
-		duty = debilizmas/z;
+		sign +=i;
+		duty = sign/z;
 		duty =(duty/(RANGE)*100);
 		printf("\033[2J\033[1;1H");
 		printf("%3.3f",duty);
