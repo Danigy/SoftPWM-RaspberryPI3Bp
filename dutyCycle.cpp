@@ -21,16 +21,13 @@ int main(void)
 	pwmWrite(PINOUT,200);
 	
 	while(true)
-	{
-		//system("CLS");
+	{		
 		i = 0;
 		u = 0;
 		for(int stop = 0; stop<RANGE; stop++ )
 		{
 			if(digitalRead(PININ) == 1)
-				i++;
-			else
-				u++;		
+				i++;	
 		}
 		debilizmas +=i;
 		duty = debilizmas/z;
