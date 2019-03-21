@@ -19,7 +19,7 @@ int main(void)
 	pinMode(PINOUT,PWM_OUTPUT);	
 	pinMode(PININ,INPUT);
 	pwmSetClock(CLOCK);
-	pwmSetRange(RANGE);
+	//pwmSetRange(RANGE);
 	pwmWrite(PINOUT,200);
 	
 	while(true)
