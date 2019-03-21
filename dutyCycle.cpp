@@ -12,6 +12,25 @@ int u = 0;
 int z = 1;
 float sign = 0;
 float duty =0;
+
+void dutyCycle()
+{
+	duty = 0;
+	i = 0;
+	u = 0;
+	for(int stop = 0; stop<RANGE; stop++ )
+	{
+		if(digitalRead(PININ) == 1)
+			i++;	
+	}
+	sign +=i;
+	duty = sign/z;
+	duty =(duty/(RANGE)*100);
+	printf("\033[2J\033[1;1H");
+	printf("%3.3f",duty);
+	printf("   %d\n",i);
+	z++;
+}
 	
 int main(void)
 {
@@ -23,21 +42,8 @@ int main(void)
 	pwmWrite(PINOUT,200);
 	
 	while(true)
-	{		
-		i = 0;
-		u = 0;
-		for(int stop = 0; stop<RANGE; stop++ )
-		{
-			if(digitalRead(PININ) == 1)
-				i++;	
-		}
-		sign +=i;
-		duty = sign/z;
-		duty =(duty/(RANGE)*100);
-		printf("\033[2J\033[1;1H");
-		printf("%3.3f",duty);
-		printf("   %d\n",i);
-		z++;
+	{
+		int edge = wiringPIISR(PININ, INT_EDGE_RISING, dutyCycle);		
 	}
 }
 	
