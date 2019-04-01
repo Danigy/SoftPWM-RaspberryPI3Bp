@@ -1,11 +1,11 @@
-#include "EncoderReadingThread.h"
+#include "EncoderReading.h"
 
 #include <stdio.h>
 #include <thread>
 #include <wiringPi.h>
 #include <unistd.h>
 
-using namespace EncoderReadingThread;
+using namespace EncoderReading;
 
 void setInputs(int inputA, int inputB){
   AInput = inputA;

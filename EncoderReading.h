@@ -1,4 +1,4 @@
-class EncoderReadingThread{
+class EncoderReading{
   public:
     int AInput = 6;
     int BInput = 7;
