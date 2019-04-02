@@ -5,14 +5,13 @@
 #include <wiringPi.h>
 #include <unistd.h>
 
-using namespace EncoderReading;
 
-void setInputs(int inputA, int inputB){
+void EncoderReading::setInputs(int inputA, int inputB){
   AInput = inputA;
   BInput = inputB;
 }
 
-void encoderSetup() {
+void EncoderReading::encoderSetup() {
   wiringPiSetup();
   //wiringPiISR(AInput, INT_EDGE_RISING, interrupt);
   //wiringPiISR(BInput, INT_EDGE_RISING, interrupt);
@@ -23,7 +22,7 @@ void encoderSetup() {
   encoderRead_t.detach();
 }
  
-void encoderValue() {
+void EncoderReading::encoderValue() {
   // read the input pin:
   while(true)
   {
@@ -81,6 +80,6 @@ void encoderValue() {
   }
 }
 
-int getEncoderSteps(){
+int EncoderReading::getEncoderSteps(){
 	return steps;
 }
