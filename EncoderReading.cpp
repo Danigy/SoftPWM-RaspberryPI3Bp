@@ -6,7 +6,6 @@
 #include <unistd.h>
 #include <iostream>
 
-using namespace EncoderReading;
 
 void EncoderReading::setInputs(int inputA, int inputB){
   AInput = inputA;
