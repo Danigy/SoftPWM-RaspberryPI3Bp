@@ -1,29 +1,34 @@
 #include "EncoderReading.h"
 
 #include <stdio.h>
-#include <thread>
+#include <pthread.h>
 #include <wiringPi.h>
 #include <unistd.h>
+#include <iostream>
 
 using namespace EncoderReading;
 
-void setInputs(int inputA, int inputB){
+void EncoderReading::setInputs(int inputA, int inputB){
   AInput = inputA;
   BInput = inputB;
 }
 
-void encoderSetup() {
+void EncoderReading::encoderSetup() {
   wiringPiSetup();
   //wiringPiISR(AInput, INT_EDGE_RISING, interrupt);
   //wiringPiISR(BInput, INT_EDGE_RISING, interrupt);
   pinMode(AInput, INPUT);
   pinMode(BInput, INPUT);
 
-  thread encoderRead_t (encoderValue);
-  encoderRead_t.detach();
+  pthread_t encoderRead_t;
+  cout<< "ecoderSetup() : Creating encoderRead thread" << endl;
+  er_t = pthread_create(&encoderRead_t, NULL, encoderValue, (void));
+  if(er_t){
+  	cout<< "Error : unable to create thread, " << er_t << endl;
+  }
 }
  
-void encoderValue() {
+static void *EncoderReading::encoderValue(void) {
   // read the input pin:
   while(true)
   {
@@ -79,8 +84,9 @@ void encoderValue() {
     lastState = State;
     usleep(10000);
   }
+  return NULL;
 }
 
-int getEncoderSteps(){
+int EncoderReading::getEncoderSteps(){
 	return steps;
 }
