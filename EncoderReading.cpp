@@ -7,15 +7,10 @@
 #include <iostream>
 
 
-void EncoderReading::setInputs(int inputA, int inputB){
+void EncoderReading::encoderSetup(int inputA, int inputB) {
   AInput = inputA;
   BInput = inputB;
-}
-
-void EncoderReading::encoderSetup() {
-  wiringPiSetup();
-  //wiringPiISR(AInput, INT_EDGE_RISING, interrupt);
-  //wiringPiISR(BInput, INT_EDGE_RISING, interrupt);
+  
   pinMode(AInput, INPUT);
   pinMode(BInput, INPUT);
 
