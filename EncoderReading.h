@@ -4,14 +4,14 @@
 class EncoderReading{
     
   public:
-    int AInput = 6;
-    int BInput = 7;
 
-    void setInputs(int inputA, int inputB);
-    void encoderSetup(void);
+    void encoderSetup(int inputA, int inputB);
     int getEncoderSteps(void);
 
-  private:  	
+  private: 
+
+    int AInput = 6;
+    int BInput = 7; 	
     int steps = 0;
     int lastState = 0;    
     int  cw = 0;
