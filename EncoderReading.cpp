@@ -13,19 +13,24 @@ void EncoderReading::encoderSetup(int inputA, int inputB) {
   
   pinMode(AInput, INPUT);
   pinMode(BInput, INPUT);
+  sleepLength = 10000;
+  *psleepLength = sleepLength;
 
   pthread_t encoderRead_t;
   cout<< "ecoderSetup() : Creating encoderRead thread" << endl;
-  er_t = pthread_create(&encoderRead_t, NULL, encoderValue, (void));
+  er_t = pthread_create(&encoderRead_t, NULL, encoderValue, (void* )psleepLength);
   if(er_t){
   	cout<< "Error : unable to create thread, " << er_t << endl;
   }
 }
  
-static void *EncoderReading::encoderValue(void) {
+static void *EncoderReading::encoderValue(void *arg) {
   // read the input pin:
   while(true)
   {
+    int sleepLength = *((int *) arg);
+    free (arg);
+
     AState = digitalRead(AInput);
     BState = digitalRead(BInput) << 1;
     State = AState | BState;
@@ -76,7 +81,7 @@ static void *EncoderReading::encoderValue(void) {
     }
    
     lastState = State;
-    usleep(10000);
+    usleep(sleepLength);
   }
   return NULL;
 }
